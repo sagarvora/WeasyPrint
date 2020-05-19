@@ -11,6 +11,7 @@ from base64 import b64encode
 from io import BytesIO
 from urllib.parse import parse_qs
 from wsgiref.simple_server import make_server
+from werkzeug.serving import run_simple
 
 from weasyprint import HTML
 
@@ -99,9 +100,7 @@ def app(environ, start_response):
 
 def run(port=5000):  # pragma: no cover
     host = '127.0.0.1'
-    server = make_server(host, port, app)
-    print('Listening on http://%s:%s/ ...' % (host, port))
-    server.serve_forever()
+    run_simple(host, port, app, use_reloader=True, use_debugger=True)
 
 
 if __name__ == '__main__':  # pragma: no cover
